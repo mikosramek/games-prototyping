@@ -10,6 +10,6 @@ class AABB: public Base {
         void Render(sf::RenderWindow& l_window);
         void Tick(sf::Event& event);
     private:
-        Room m_room;
+        Room* m_room;
         Player m_player;
 };

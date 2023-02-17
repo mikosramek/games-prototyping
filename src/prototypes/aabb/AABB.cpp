@@ -13,13 +13,15 @@
 AABB::AABB() {
     std::cout << "New AABB" << std::endl;
     m_shouldRender = true;
+    m_room = new Room();
+    m_player.SetRoom(m_room);
 }
 
 AABB::~AABB() {}
 
 void AABB::Render(sf::RenderWindow& l_window) {
     m_player.Render(l_window);
-    m_room.Render(l_window);
+    m_room->Render(l_window);
 }
 
 void AABB::Tick(sf::Event& event) {

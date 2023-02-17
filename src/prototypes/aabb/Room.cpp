@@ -14,13 +14,13 @@ Room::Room() {
     m_walls.push_back(Wall(sf::Vector2f(200, 100), sf::Vector2f(200, 10)));
     m_walls.push_back(Wall(sf::Vector2f(100, 200), sf::Vector2f(10, 200)));
 
-
     m_walls.push_back(Wall(sf::Vector2f(300, 400), sf::Vector2f(200, 10)));
-    m_walls.push_back(Wall(sf::Vector2f(400, 300), sf::Vector2f(10, 200)));
-    
+    m_walls.push_back(Wall(sf::Vector2f(400, 300), sf::Vector2f(10, 200)));   
 }
 
 Room::~Room() {}
+
+std::vector<Wall> Room::GetWalls() { return m_walls; }
 
 void Room::Render(sf::RenderWindow& l_window) {
     for (int i = 0; i < m_walls.size(); i += 1) {
