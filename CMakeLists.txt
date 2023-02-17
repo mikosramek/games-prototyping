@@ -11,6 +11,11 @@ add_executable(SFMLPrototypes
  src/main.cpp 
  src/launcher/launcher.cpp 
  src/shared/window.cpp
+ src/prototypes/base/base.cpp
+ src/prototypes/aabb/AABB.cpp
+ src/prototypes/aabb/Player.cpp
+ src/prototypes/aabb/Room.cpp
+ src/prototypes/aabb/Wall.cpp
 )
 target_link_libraries(SFMLPrototypes PRIVATE sfml-graphics)
 target_compile_features(SFMLPrototypes PRIVATE cxx_std_17)
@@ -19,6 +24,6 @@ if (WIN32 AND BUILD_SHARED_LIBS)
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:SFMLPrototypes> $<TARGET_FILE_DIR:SFMLPrototypes> COMMAND_EXPAND_LISTS)
 endif()
 
-file(COPY src/resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} resources)
+file(COPY src/resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} ./)
 
 install(TARGETS SFMLPrototypes)

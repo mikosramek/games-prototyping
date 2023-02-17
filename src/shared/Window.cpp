@@ -46,6 +46,11 @@ sf::RenderWindow* Window::GetRenderWindow() {
 	return &m_window;
 }
 
+void Window::Show(const std::string& l_title) {
+	m_windowTitle = l_title;
+	Show();
+}
+
 void Window::Show() {
 	m_show = true;
 	m_isDone = false;

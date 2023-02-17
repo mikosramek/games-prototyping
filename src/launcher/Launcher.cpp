@@ -1,11 +1,11 @@
 #include "Launcher.h"
 
-
 Launcher::Launcher():
     m_window("SFML Prototypes", sf::Vector2u(800, 600)),
-    m_currentPrototype("-", sf::Vector2u(500, 500))
+    m_currentPrototype("-", sf::Vector2u(500, 500)),
+    m_prototype()
 {
-    m_currentPrototype.Hide();
+    ResetPrototype();
 
     m_prototypes.push_back("AABB");
     m_prototypes.push_back("Gravity");
@@ -22,6 +22,10 @@ Launcher::Launcher():
 
 Launcher::~Launcher() { };
 
+void Launcher::ResetPrototype() {
+    m_currentPrototype.Hide();
+    m_prototype = new Base();
+}
 
 Window* Launcher::GetWindow() {
     return &m_window;
@@ -40,6 +44,9 @@ void Launcher::Render() {
 
     m_currentPrototype.BeginDraw();
     // pass window to game object to render with
+        if (m_prototype->ShouldRender()) {
+            m_prototype->Render(*m_currentPrototype.GetRenderWindow());
+        }
     m_currentPrototype.EndDraw();
 }
 
@@ -51,15 +58,18 @@ void Launcher::Tick() {
         }
         else if (event.key.code == sf::Keyboard::Down) {
             AdjustIndex(1);
-        } else if (event.key.code == sf::Keyboard::P) {
+        } else if (event.key.code == sf::Keyboard::Space) {
             OpenPrototype();
         }
     }
 
 
-    m_currentPrototype.Tick();
+    sf::Event protoEvent = m_currentPrototype.Tick();
+    if (m_prototype->ShouldRender()) {
+        m_prototype->Tick(protoEvent);
+    }
     if (m_currentPrototype.IsDone()) {
-        m_currentPrototype.Hide();
+        ResetPrototype();
     }
 }
 
@@ -73,5 +83,18 @@ void Launcher::AdjustIndex(int l_change) {
 }
 
 void Launcher::OpenPrototype() {
-    m_currentPrototype.Show();
+    std::cout << "Launching prototype" << std::endl;
+    bool validSelection = true;
+    switch(m_index) {
+        case 0: {
+            m_prototype = new AABB();
+            break;
+        }
+        default:
+            validSelection = false;
+            break;
+    }
+    if (validSelection) {
+        m_currentPrototype.Show(m_prototypes[m_index]);
+    }
 }

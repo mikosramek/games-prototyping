@@ -20,6 +20,7 @@ public:
 	bool ShouldRender();
 	void Hide();
 	void Show();
+	void Show(const std::string& l_title);
 
 	sf::Event& Tick();
 
